@@ -9,7 +9,7 @@ This is a project in the software development course at Jönköping University. 
 - Yuze Xu
   - Github : xX_DarkLorD_Xx
 - Berkant Resyul Hasan
-  - Github :
+  - Github : Berkiba
 - Josef Norling
   - Github : 
 - Zaid Yassir Sultan
