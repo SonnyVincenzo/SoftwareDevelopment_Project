@@ -13,7 +13,7 @@ This is a project in the software development course at Jönköping University.
 - Josef Norling
   - Github : SonnyVincenzo
 - Zaid Yassir Sultan
-  - Github : 
+  - Github : zySULTAN
 - Leo Jönnerstig
   - Github : LJkiller
 
@@ -34,3 +34,4 @@ Workflow:
 >
 > I, Josef Norling, declare that I am the sole author of the content I add to this repository.
 >
+> I, Zaid-Yassir Sultan, declare that I am the sole author of the content I add to this repository.
