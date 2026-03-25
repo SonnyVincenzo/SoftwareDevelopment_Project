@@ -11,9 +11,9 @@ This is a project in the software development course at Jönköping University.
 |Zaid Yassir Sultan|zySULTAN|
 |Leo Jönnerstig|LJkiller|
 ### Plan 
-Programming Language: 
-Build System: 
-Workflow: 
+Programming Language: Guys what did we decide lol -berk
+Build System: not unity at least -berk
+Workflow: idk whatever works -berk
 > ## Declaration
 > I, Firstname1 Lastname1, declare that I am the sole author of the content I add to this repository.
 >
