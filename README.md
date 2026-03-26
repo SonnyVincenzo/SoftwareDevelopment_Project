@@ -11,7 +11,7 @@ This is a project in the software development course at Jönköping University.
 |Zaid Yassir Sultan|zySULTAN|
 |Leo Jönnerstig|LJkiller|
 ### Plan 
-Programming Language: Guys what did we decide lol -berk
+Programming Language: Guys what did we decide lol (i have never coded in python fyi)-berk
 Build System: not unity at least -berk
 Workflow: idk whatever works -berk
 > ## Declaration
