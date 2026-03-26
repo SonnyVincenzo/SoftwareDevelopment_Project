@@ -8,7 +8,7 @@ We will have MySQL for the website's database.
 - The users will be able to post images and statuses on the website.
 - The users can rate and comment on other users posts.
 - Users will be able to add each other as friends. 
-- Users can chat with each other privately
+- Users can chat with each other privately.
 
 
 ### Participants
@@ -22,7 +22,7 @@ We will have MySQL for the website's database.
 |Zaid Yassir Sultan|zySULTAN|
 |Leo Jönnerstig|LJkiller|
 ### Plan 
-- Programming Language: Javascript, MySQL
+- Programming Language: HTML, CSS, Javascript, MySQL
 - Build System: React, Node.js
 - Workflow: The group will have work separately assigned in the three sections, Frontend, Backend and the database. 
 > ## Declaration
