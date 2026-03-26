@@ -1,6 +1,6 @@
 # SoftwareDevelopment_Project
 This is a project in the software development course at Jönköping University. 
-We are developing a social media website in Node.js with the React/Vite framework. 
+We are developing a social media website in Node.js for the backend and React for the frontend. 
 We will have MySQL for the website's database. 
 ### Participants
 |Name|Github Handle|
@@ -14,7 +14,7 @@ We will have MySQL for the website's database.
 |Leo Jönnerstig|LJkiller|
 ### Plan 
 Programming Language: Javascript, MySQL
-Build System: React/Vite, Node.js
+Build System: React, Node.js
 Workflow: The group will have work separately assigned in the three sections, Frontend, Backend and the database. 
 > ## Declaration
 > I, Firstname1 Lastname1, declare that I am the sole author of the content I add to this repository.
