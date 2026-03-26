@@ -1,14 +1,15 @@
-# SoftwareDevelopment_Project
+# SoftwareDevelopment_Project_NodeJs_SocialMedia
 This is a project in the software development course at Jönköping University. 
 We are developing a social media website in Node.js for the backend and React for the frontend. 
 We will have MySQL for the website's database. 
 
 ### The contents of the project
 - The website will include the option to create an account with a username and password. 
-- The users will be able to post images and statuses on the website.
-- The users can rate and comment on other users posts.
+- The users will be able to post text statuses on the website. 
+- The users can rate and comment on other users posts. 
 - Users will be able to add each other as friends. 
-- Users can chat with each other privately.
+- Users can chat with each other privately. 
+- The data of the users and posts will be stored in a MySQL database 
 
 
 ### Participants
