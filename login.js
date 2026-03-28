@@ -5,16 +5,16 @@ let password;
 
 username_password_submit.onclick = function()
 {
-    //event.preventDefault(); stops page from reload
+    //event.preventDefault(); //stops page from reload
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
     if(username !== "" && password !== "")
     {
         console.log("Name entered: ", username, password);
-    }
-    else
-    {
-        console.log("write username and password to enter");
+        //users go to the homepage after login in
+        //window.location.href = "test.homepage.html";
+
+        //check if the user already exist
     }
 }
