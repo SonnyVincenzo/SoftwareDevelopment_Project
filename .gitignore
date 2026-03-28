@@ -7,3 +7,5 @@ package-lock.json
 
 # Environment Variables
 .env
+
+test.*.html
