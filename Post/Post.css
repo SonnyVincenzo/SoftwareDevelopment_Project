@@ -68,8 +68,9 @@ html,body{
   }
 
   .standardButton:hover{
-    background: linear-gradient(to right, rgba(189, 133, 241, 1), rgba(110, 110, 243, 1));
+    background: linear-gradient(to right, blueviolet, rgba(1, 200, 250, 0.8) );
     border-width: 2px;
+    border-style: solid;
     border-color:  rgb(43, 42, 43);
     color: rgb(0, 0, 0);
     opacity: 0.8
