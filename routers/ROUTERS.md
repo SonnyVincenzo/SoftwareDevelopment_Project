@@ -1,4 +1,4 @@
-# Routes
+# Routers
 This directory is used to delegate and handle endponts request, and continue the request to [routeHandlers](../routeHandlers/).
 
 [index.js](../index.js) needs to import the routers declared inside this directory, and add them to app.use for allowing nestled/grouped endpoints:
@@ -45,4 +45,5 @@ Endpoints for user and users:
 
 Having user being a nestled group it enables scalability as if it's a prefix:
 http://127.0.0.1:3000/user/someonesUsername
+
 May potentially change into user?uuid=, or user?username=.
