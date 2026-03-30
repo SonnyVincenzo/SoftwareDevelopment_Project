@@ -4,6 +4,7 @@ function App() {
   const [content, setContent] = useState("");
   const [posts, setPosts] = useState([]);
 
+  //fetch posts from the backend
   const fetchPosts = async () => {
     const res = await fetch("http://localhost:5000/posts");
     const data = await res.json();
@@ -14,6 +15,7 @@ function App() {
     fetchPosts();
   }, []);
 
+  //Submit post function
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,10 +33,12 @@ function App() {
 
   return (
     <div style={{ maxWidth: "600px", margin: "40px auto", fontFamily: '"Comic Sans MS", Cursive' }}>
+      {/*The website header*/}
       <h1 style={{ fontFamily: '"Comic Sans MS", cursive', color: "yellow"}}>
         My Cool Website :D
         </h1>
 
+      {/*The text box where you write your post*/}
       <form onSubmit={handleSubmit}>
         <textarea
           rows="4"
@@ -48,6 +52,7 @@ function App() {
           onChange={(e) => setContent(e.target.value)}
           placeholder="What are you thinking about?"
         />
+        {/*Submit button*/}
         <button 
           type="submit"
             style={{
