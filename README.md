@@ -11,6 +11,25 @@ We will have MySQL for the website's database.
 - Users can chat with each other privately. 
 - The data of the users and posts will be stored in a MySQL database 
 ### [KanBan Board](https://github.com/users/SonnyVincenzo/projects/1)
+
+### Requirements
+Software:
+1. Node.js
+2. MySQL
+
+Dependencies:
+1. Express
+2. Dotenv
+3. MySQL
+
+#### How to install
+For dependencies: Express, Dotenv, MySQL:
+Write following command into a terminal where ```npm --version``` is able to display version;
+- Express: ```npm install express```
+- DotEnv: ```npm install dotenv```
+- MySQL: ```npm install mysql```
+
+
 ### Participants
 |Name|Github Handle|
 |-|-|
