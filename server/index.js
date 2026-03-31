@@ -41,9 +41,11 @@ app.post("/register", (req, res) => {
     return res.status(400).json({ error: "Password must be at least 3 characters" });
   }
 
+  const trimmedUsername = username.trim(); //removes spaces, both at the begining and at the end
+  
   db.query(
     "SELECT * FROM users WHERE username = ?",
-    [username],
+    [trimmedUsername],
     (err, result) => {
       if (err) {
         console.error(err);
@@ -60,29 +62,27 @@ app.post("/register", (req, res) => {
           console.error(err);
           return res.status(500).json({error: "Error Hashing password"});
         }
-      })
 
-      //new user
-      db.query(
-        "INSERT INTO users (username, password) VALUES (?, ?)",
-        [username, hash],
-        (err, result) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).json({ error: "Database error (user prolly exists bruv)" });
+        db.query(
+          "INSERT INTO users (username, password) VALUES (?,?)",
+          [trimmedUsername, hash],
+          (err, result) => {
+            if(err) 
+            {
+              console.error(err);
+              return res.status(500).json({
+                error: "Database error (user prolly exists bruv)"});
+            }
+            res.status(201).json({
+              message: "User created successfully", 
+              userId: result.insertId
+            });
           }
-
-          //success
-          res.status(201).json({
-            message: "User created successfully",
-            userId: result.insertId
-          });
-        }
-      );
+        );
+      })
     }
   );
 });
-
 app.listen(5000, () => {
   console.log("Server running on http://localhost:5000");
 });
