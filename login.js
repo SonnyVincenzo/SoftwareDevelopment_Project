@@ -1,20 +1,26 @@
-const username_password_submit = document.getElementById("submit"); 
-let username;
-let password;
+const loginBtn = document.getElementById("loginBtn");
+const registerBtn = document.getElementById("registerBtn"); 
 
-
-username_password_submit.onclick = function()
+//login
+loginBtn.onclick = async function()
 {
-    //event.preventDefault(); //stops page from reload
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-  
+    const response = await fetch("http://localhost:5000/login", {
+        method: "Post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({username, password})
+    });
 
-        //check if the user already exist in database
-        //if not then create a user
-
-        window.prompt("You don't have a username, press create user when you entered name and password");
-        const new_username = document.getElementById("createuser");
-        console.log("User pressed createUser");
+    if(response.ok)
+    {
+        alert("Login Successful");
+    }
+    else 
+    {
+        alert(this.dataset.error);
+    }
 }

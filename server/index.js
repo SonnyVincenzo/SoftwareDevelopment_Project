@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const app = express();
 
@@ -52,10 +54,18 @@ app.post("/register", (req, res) => {
         return res.status(400).json({ error: "User already exists" });
       }
 
+      bcrypt.hash(password, saltRounds, (err,hash) =>{
+        if(err)
+        {
+          console.error(err);
+          return res.status(500).json({error: "Error Hashing password"});
+        }
+      })
+
       //new user
       db.query(
         "INSERT INTO users (username, password) VALUES (?, ?)",
-        [username, password],
+        [username, hash],
         (err, result) => {
           if (err) {
             console.error(err);
