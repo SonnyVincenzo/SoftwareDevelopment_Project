@@ -7,3 +7,6 @@ package-lock.json
 
 # Environment Variables
 .env
+
+.dist/
+vite-project/
