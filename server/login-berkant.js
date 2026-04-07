@@ -7,7 +7,6 @@ import { hash as _hash, compare } from "bcrypt";
 
 // Possible rewrite for login script - LJ.
 
-
 const saltRounds = 10;
 
 const app = express();
@@ -17,18 +16,41 @@ app.use(json());
 
 //DB-connection
 const db = createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Nasra123",
-  database: "social_test"
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD
 });
 
 db.connect((err) => {
   if (err) {
-    console.error("Database connection error:", err);
-  } else {
-    console.log("Connected to MySQL");
+    console.error("Database connection error: ", err);
+    return;
   }
+  console.log("Connected to MySQL");
+  //create database if not exits
+  db.query(`CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`, (err) => {
+    //if something went wrong -> crash the program
+    if(err) throw err;
+    //else it writes this
+    console.log("Database is ready");
+
+  //switch to that database
+  db.changeUser({database: process.env.DB_NAME}, (err) => {
+    if(err) throw err;
+
+    //create users table
+    const sql = `
+    CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE,
+    password VARCHAR(255)
+    )`;
+    db.query(sql, (err) => {
+      if (err) throw err;
+      console.log("Users table ready");
+    });
+  });
+  });
 });
 
 //for registering endpoint, check for blanks, minimum password length, no duplicates
@@ -92,10 +114,11 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
   //gets input from the frontend
   const {username, password} = req.body;
+  const trimmedUsername = username.trim();
   //looks if the user exist in the database
   db.query(
     "SELECT * FROM users WHERE username = ?",
-    [username],
+    [trimmedUsername],
     async (err, result) => {
       if(err) {
         //something went wrong internally
