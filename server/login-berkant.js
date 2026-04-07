@@ -1,19 +1,19 @@
-const express = require("express");
-const cors = require("cors");
-const mysql = require("mysql2");
-const bcrypt = require("bcrypt");
+import express, { json } from "express";
+import cors from "cors";
+import { createConnection } from "mysql2";
+import { hash as _hash } from "bcrypt";
 const saltRounds = 10;
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(json());
 
 //DB-connection
-const db = mysql.createConnection({
+const db = createConnection({
   host: "localhost",
   user: "root",
-  password: "1234", 
+  password: "Nasra123",
   database: "social_test"
 });
 
@@ -42,7 +42,7 @@ app.post("/register", (req, res) => {
   }
 
   const trimmedUsername = username.trim(); //removes spaces, both at the begining and at the end
-  
+
   db.query(
     "SELECT * FROM users WHERE username = ?",
     [trimmedUsername],
@@ -52,29 +52,29 @@ app.post("/register", (req, res) => {
         return res.status(500).json({ error: "Database error (check yo username bruv)" });
       }
 
+
       if (result.length > 0) {
         return res.status(400).json({ error: "User already exists" });
       }
 
-      bcrypt.hash(password, saltRounds, (err,hash) =>{
-        if(err)
-        {
+      _hash(password, saltRounds, (err, hash) => {
+        if (err) {
           console.error(err);
-          return res.status(500).json({error: "Error Hashing password"});
+          return res.status(500).json({ error: "Error Hashing password" });
         }
 
         db.query(
           "INSERT INTO users (username, password) VALUES (?,?)",
           [trimmedUsername, hash],
           (err, result) => {
-            if(err) 
-            {
+            if (err) {
               console.error(err);
               return res.status(500).json({
-                error: "Database error (user prolly exists bruv)"});
+                error: "Database error (user prolly exists bruv)"
+              });
             }
             res.status(201).json({
-              message: "User created successfully", 
+              message: "User created successfully",
               userId: result.insertId
             });
           }
@@ -83,6 +83,6 @@ app.post("/register", (req, res) => {
     }
   );
 });
-app.listen(5000, () => {
+app.listen(process.env.SERVER_PORT, () => {
   console.log("Server running on http://localhost:5000");
 });
