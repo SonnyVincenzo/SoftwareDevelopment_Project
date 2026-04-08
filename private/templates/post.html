@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/post.css">
+    <script defer src="/public/js/post.js"></script>
     <title>NewPost</title>
 </head>
 
@@ -23,19 +24,18 @@
     </button>
   </header>
   <div class="container">
-    <input class="title" type="text" spellcheck="true" maxlength="100"
+    <input id="title" type="text" spellcheck="true" maxlength="100"
     placeholder="Post - Title">
     <textarea 
-      class="mainBody" 
+      id="mainBody" 
       type="text" 
       spellcheck="true"
       placeholder="Post - Text" 
       maxlength="300"
       style="resize:none"></textarea>
-    <button class="standardButton" onclick=""> <!--ADD LINK-->
+    <button id="standardButton" onclick="shareButtonFunction()"> <!--ADD LINK-->
       Share
     </button>
   </div>
-  <script src="/public/js/post.js"></script>
 </body>
 </html>
