@@ -1,4 +1,4 @@
-// LEO FIX THIS
+// Potential keep unless we work with form action="url" method="post"
 import { handlePostPost } from "../../routeHandlers/user/postHandler.js"
 import { handleHome } from '../../routeHandlers/homeHandler.js';
 const postTitle = document.getElementById("title");
