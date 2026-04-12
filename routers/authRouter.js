@@ -5,14 +5,15 @@ import express from 'express';
 import { handleLogin, handleLoginPost } from '../routeHandlers/auth/loginHandler.js';
 import { handleSignup, handleSignupPost } from '../routeHandlers/auth/signupHandler.js';
 
-const authRouter = express.Router();
+export default function authRouter(db) {
+    const router = express.Router();
 
-// Set endpoints.
-authRouter.get('/login', handleLogin);
-authRouter.get('/signup', handleSignup);
+    router.get('/login', handleLogin);
+    router.get('/signup', handleSignup);
 
-// For form and db:
-authRouter.post('/login', handleLoginPost);
-authRouter.post('/signup', handleSignupPost);
+    // for form and db:
+    router.post('/login', handleLoginPost(db));
+    router.post('/signup', handleSignupPost(db));
 
-export default authRouter;
+    return router;
+}

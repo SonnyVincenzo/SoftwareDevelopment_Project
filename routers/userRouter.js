@@ -4,9 +4,11 @@ import express from 'express';
 
 import { handleUser } from '../routeHandlers/user/userHandler.js';
 
-const userRouter = express.Router();
+export default function userRouter(db) {
+    const router = express.Router();
 
-// Set endpoints. ("/:username": allowing "user/someonesUsername")
-userRouter.get('/:username', handleUser);
+    // ("/:username": allowing "user/someonesUsername")
+    router.get('/:username', handleUser(db));
 
-export default userRouter;
+    return router;
+}

@@ -4,24 +4,35 @@ import { loadHtml } from '../../methods/utilsMethods.js';
 /**
  * Handles user page request (GET /user/username).
  *
- * @async
- * @param {import('express').Request} req - Input from browser; ex: url, query.
- * @param {import('express').Response} res - Output from browser; ex: text/html.
+ * @param {import('mysql2').Connection} db
  */
-export async function handleUser(req, res) {
-    const { username } = req.params;
+export function handleUser(db) {
+    return async (req, res) => {
+        const { username } = req.params;
 
-    try {
-        let template = await loadHtml('user.html');
+        try {
+            db.query(
+                'SELECT username, joinDate FROM User WHERE username = ?',
+                [username],
+                async (err, result) => {
+                    if (err) {
+                        console.error('User query error:', err);
+                        return sendWebResponse(res);
+                    }
 
-        /* To do here:
-        - Add db fetch for username.
-        - Update user.html content appropiately and insert it here.
-        */
-        template = template.replace('<h1>User</h1>', `User: ${username}`);
-        sendWebResponse(res, 200, 'text/html', template);
-    } catch (error) {
-        console.error('User error:', error);
-        sendWebResponse(res);
-    }
+                    if (result.length === 0) {
+                        return sendWebResponse(res, 404, 'text/plain', '404 User Not Found');
+                    }
+
+                    const user = result[0];
+                    let template = await loadHtml('user.html');
+                    template = template.replace('<h1>User</h1>', `User: ${user.username}`);
+                    sendWebResponse(res, 200, 'text/html', template);
+                }
+            );
+        } catch (error) {
+            console.error('User error:', error);
+            sendWebResponse(res);
+        }
+    };
 }
