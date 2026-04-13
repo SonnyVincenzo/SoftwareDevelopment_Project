@@ -2,7 +2,7 @@
 
 import express from 'express';
 
-import { handleUser } from '../routeHandlers/user/userHandler.js';
+import { handleUserGet } from '../routeHandlers/user/userHandler.js';
 
 export default function userRouter(db) {
     const router = express.Router();

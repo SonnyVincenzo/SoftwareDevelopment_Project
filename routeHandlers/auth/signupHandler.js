@@ -11,12 +11,12 @@ const saltRounds = 10;
  * @param {import('express').Request} req - Input from browser; ex: url, query.
  * @param {import('express').Response} res - Output from browser; ex: text/html.
  */
-export async function handleSignup(req, res) {
+export async function handleSignupGet(req, res) {
     try {
         const template = await loadHtml('signup.html');
         sendWebResponse(res, 200, 'text/html', template);
     } catch (error) {
-        console.error('Signup error:', error);
+        console.error('Signup GET error:', error);
         sendWebResponse(res);
     }
 }

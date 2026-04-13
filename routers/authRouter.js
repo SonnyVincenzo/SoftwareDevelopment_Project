@@ -2,8 +2,8 @@
 
 import express from 'express';
 
-import { handleLogin, handleLoginPost } from '../routeHandlers/auth/loginHandler.js';
-import { handleSignup, handleSignupPost } from '../routeHandlers/auth/signupHandler.js';
+import { handleLoginGet, handleLoginPost } from '../routeHandlers/auth/loginHandler.js';
+import { handleSignupGet, handleSignupPost } from '../routeHandlers/auth/signupHandler.js';
 
 export default function authRouter(db) {
     const router = express.Router();
