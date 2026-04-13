@@ -16,13 +16,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "setup": "npm install && shx cp .env-sample .env"   
+    "setup": "npm install && shx cp .env-sample .env"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "dotenv": "^17.4.1",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mysql2": "^3.21.1"
+    "mysql2": "^3.22.0"
   },
   "devDependencies": {
     "shx": "^0.4.0"

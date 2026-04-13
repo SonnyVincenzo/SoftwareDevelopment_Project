@@ -16,22 +16,37 @@
   <header class="topRow">
     <input class="search" type="text" spellcheck="true" maxlength="100"
     placeholder="Search">
-    <form action="/user/this_guy">
+    <form action="/user/username">
       <button id="standardButton" onclick=""> 
         Username
       </button>
     </form>
-    <a href="/user/this_guy"> 
+    <a href="/user/username"> 
       <div class="profile"></div>
     </a>
   </header>
   <main>
-    
+    <article class="post-board">
+      <article id=post>
+        <h2 class="info"> Title 
+        </h2>
+        <h3 class="info"> By:
+          <a class="info" href="/user/username">
+            Username
+          </a>
+        </h3>
+        <form>
+          <button id="like" onclick="focus">
+            &#10084;
+          </button>
+        </form>
+      </article>
+    </article>
   </main>
   <footer class="footer">
-    <p class="info">
+    <h2 class="info">
       Contact
-    </p>
+    </h2>
     <a class="github" href="https://github.com/SonnyVincenzo/SoftwareDevelopment_Project_NodeJs_SocialMedia">
       Github
     </a>

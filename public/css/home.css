@@ -11,15 +11,12 @@ html{
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-left: 11px;
-  padding-right: 11px;
   padding-top: 5px;
-  padding-bottom: 5px;
   margin: 0px;
   background-color: rgba(53, 52, 53, 0.8);
-  width: 100%;
   height: 90px;
   border-bottom: 1px rgba(125, 124, 124, 0.933) solid;
+  justify-content: space-between;
 }
 .search{
   margin-left: 60%;
@@ -76,24 +73,54 @@ html{
   width: 80px;
   height: 80px;
 }
+.post-board{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#post{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-style: inset;
+  border-width: 5px;
+  border-color: rgba(1, 199, 249, 1);
+  border-radius: 10px;
+  background-color:rgb(43, 42, 43);
+  justify-content: space-between;
+}
+#like{
+  color: rgb(43, 42, 43);
+  background-color:rgb(43, 42, 43);
+  font-size: 18px;
+  border: none;
+}
+  
+#like:hover{
+  color:  blueviolet;
+}
+#like:active{
+  color:rgba(1, 199, 249, 1);
+}
+
+
 .footer{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-left: 11px;
-  padding-right: 11px;
+  justify-content: space-between;
   padding-top: 5px;
-  padding-bottom: 5px;
+  padding-bottom: 20px;
   margin: 0px;
   background-color: rgba(53, 52, 53, 0.8);
-  width: 100%;
   height: 90px;
   border-top: 1px rgba(125, 124, 124, 0.933) solid;
 }
 .info{
   color: white;
-  font-size: 20px;
   font-family: Tektur;
+  text-decoration: none;
 }
 .github{
   color: white;
