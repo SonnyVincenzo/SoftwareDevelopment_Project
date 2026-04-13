@@ -1,0 +1,241 @@
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+class Vec2 {
+    constructor(x,y){
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Vec3 {
+    constructor(x,y,z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    static Normalize(v){
+        const px = Math.pow(v.x,2);
+        const py = Math.pow(v.y,2);
+        const pz = Math.pow(v.z,2);
+        const magnitude = Math.sqrt(px+py+pz);
+        const newX = v.x/magnitude;
+        const newY = v.y/magnitude;
+        const newZ = v.z/magnitude;
+        return new Vec3(newX,newY,newZ);
+    }
+}
+
+class Quaternion {
+    constructor(w, x, y, z, axis = null, radian = null) {
+        if (axis && radian !== null) {
+            // axis-angle constructor
+            const halfRadian = radian / 2;
+            this.w = Math.cos(halfRadian);
+            this.x = axis.x * Math.sin(halfRadian);
+            this.y = axis.y * Math.sin(halfRadian);
+            this.z = axis.z * Math.sin(halfRadian);
+        } else {
+            // standard constructor
+            this.w = w;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+    }
+    static HamiltonProduct(q1, q2){
+        // composition of two rotation
+        const w = q1.w*q2.w - q1.x*q2.x - q1.y*q2.y - q1.z*q2.z;
+        const x = q1.w*q2.x + q1.x*q2.w + q1.y*q2.z - q1.z*q2.y;
+        const y = q1.w*q2.y - q1.x*q2.z + q1.y*q2.w + q1.z*q2.x;
+        const z = q1.w*q2.z + q1.x*q2.y - q1.y*q2.x + q1.z*q2.w;
+        return new Quaternion(w,x,y,z);
+    }
+    static Conjugate(q){
+        return new Quaternion(q.w,-q.x,-q.y,-q.z);
+    }
+    static Rotate(vertex, quaternion) {
+        const v = new Quaternion(0, vertex.x, vertex.y, vertex.z);
+        const step1 = Quaternion.HamiltonProduct(quaternion, v);
+        const step2 = Quaternion.Conjugate(quaternion);
+        const step3 = Quaternion.HamiltonProduct(step1, step2);
+        const result = step3;
+        return new Vec3(result.x, result.y, result.z);
+    }
+}
+
+// cube vertices in canoncial view
+// directx coordinate system
+const vertices = [  // x-y-z
+    new Vec3(-1, -1, -1),   // left-botton  -near
+    new Vec3(1, -1, -1),    // right-botton -near
+    new Vec3(1, 1, -1),     // right-top    -near
+    new Vec3(-1, 1, -1),    // left-top     -near
+
+    new Vec3(-1, -1, 1),    // left-botton  -far
+    new Vec3(1, -1, 1),     // right-botton -far
+    new Vec3(1, 1, 1),      // right-top    -far
+    new Vec3(-1, 1, 1)      // left-top     -far
+];
+
+// cube edges represented by indices
+const edges = [
+    [0, 1], [1, 2], [2, 3], [3, 0], // front face
+    [4, 5], [5, 6], [6, 7], [7, 4], // back face
+    [0, 4], [1, 5], [2, 6], [3, 7]  // connecting edges
+];
+
+/*___________________________________________________________
+* MOUSE
+*
+*
+*
+*
+___________________________________________________________*/
+class Mouse {
+    constructor(){
+        this.x = 0;
+        this.y = 0;
+        this.dx = 0;
+        this.dy = 0;
+        this.leftClick = false;
+        this.leftHandled = false;
+        // reserved for right click
+        this.rightClick = false;
+        this.rightHandled = false;
+    }
+}
+let mouse = new Mouse();
+
+document.addEventListener('mousemove', (event) => {
+    // only track when holding the left button
+    if (mouse.leftClick === true) {
+        mouse.dx = (event.clientX - mouse.x);
+        mouse.dy = (event.clientY - mouse.y);
+        mouse.leftHandled = false;
+    }
+    mouse.x = event.clientX;
+    mouse.y = event.clientY;
+});
+
+document.addEventListener('mousedown', (event) => {
+    if (event.button === 0){
+        mouse.leftClick = true;
+    } 
+    if (event.button === 2){
+        mouse.rightClick = true;
+    } 
+});
+
+document.addEventListener('mouseup', (event) => {
+    if (event.button === 0) mouse.leftClick = false;
+    if (event.button === 2) mouse.rightClick = false;
+});
+
+/*___________________________________________________________
+* Draw
+*
+*
+*
+*
+___________________________________________________________*/
+// https://github.com/yuzekesu/test_Without_D3DXMath/blob/master/New_Window/Float4x4.cpp
+// checkout my repo if you have interest in 3d projection too
+function ProjectVertex(vertex, fov, aspectRatio, nearPlane, farPlane) {
+    const s = 1.0 / Math.tan(fov / 2);
+    
+    const x = (s / aspectRatio) * vertex.x;
+    const y = s * vertex.y;
+    const z = (farPlane / (farPlane - nearPlane)) * vertex.z - (farPlane * nearPlane / (farPlane - nearPlane));
+    const w = vertex.z;
+    
+    const x2d = x / w;
+    const y2d = y / w;
+    
+    return new Vec2(x2d,y2d);
+}
+
+// just want to shift a little bit from the origin
+// since the camera is on the origin
+function ViewVertex(vertex, zShift) {
+    return new Vec3(vertex.x,vertex.y,vertex.z + zShift);
+}
+
+function Draw(){
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // rotate only when draging with the mouse
+    if (mouse.leftClick === true && mouse.leftHandled === false) {
+        mouse.leftHandled = true;
+        
+        // probably the compose part that does the jaggy
+        // probably the compose part that does the jaggy
+        // probably the compose part that does the jaggy
+        // probably the compose part that does the jaggy
+        // probably the compose part that does the jaggy
+        // probably the compose part that does the jaggy
+        // probably the compose part that does the jaggy
+        const pitchRadian = -Math.sin(mouse.dx) / 100;
+        const yawRadian = Math.sin(mouse.dy) / 100;
+
+        const yAxis = new Vec3(0,1,0);
+        const xAxis = new Vec3(1,0,0);
+
+        const yQuat = new Quaternion(0,0,0,0,yAxis, pitchRadian);
+        const xQuat = new Quaternion(0,0,0,0,xAxis, yawRadian);
+
+        const composedQuat = Quaternion.HamiltonProduct(yQuat, xQuat);
+
+        for (let i = 0; i < 8; i++){
+            vertices[i] = Quaternion.Rotate(vertices[i], composedQuat);
+        }
+    }
+    
+
+    // apply view matrix + projection matrix + scale + translate
+    const projectedVertices = [];
+    const fov = 90;
+    const aspectRatio = canvas.width / canvas.height;
+    const nearPlane = 0;
+    const farPlane = 100;
+    for (let i = 0; i < 8; i++){
+        const halfWidth = canvas.width / 2;
+        const halfHeight = canvas.height / 2;
+        const viewed = ViewVertex(vertices[i], 4);
+        const projected = ProjectVertex(viewed, fov, aspectRatio, nearPlane, farPlane);
+        const canoncialToScreen =  new Vec2(projected.x * halfWidth, -projected.y * halfHeight);
+        const moveToCenter = new Vec2(canoncialToScreen.x + halfWidth, -canoncialToScreen.y + halfHeight)
+        projectedVertices[i] = moveToCenter;
+        
+    }
+
+    // draw edges
+    // reminder: understand how this works
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    
+    for (let edge of edges){
+        const p1 = projectedVertices[edge[0]];
+        const p2 = projectedVertices[edge[1]];
+        
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+    }
+}
+
+
+// what is this ? and why do we need this ?
+// what is this ? and why do we need this ?
+// what is this ? and why do we need this ?
+function animate() {
+    Draw();
+    requestAnimationFrame(animate);
+}
+animate();
+
