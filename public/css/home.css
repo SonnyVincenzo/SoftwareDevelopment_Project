@@ -95,17 +95,7 @@ html{
   background-color:rgb(43, 42, 43);
 }
 
-.like{
-  display: flex ;
-  color: rgb(43, 42, 43);
-  background-color:rgb(43, 42, 43);
-  font-size: 22px;
-  border: none;
-}
-  
-.like:hover{
-  color:  blueviolet;
-}
+
 
 .title{
   color: white;
@@ -119,6 +109,20 @@ html{
   margin-top: 10px;
 }
 
+.dislike,
+.like{
+  display: flex ;
+  color: rgb(43, 42, 43);
+  background-color:rgb(43, 42, 43);
+  font-size: 28px;
+  border: none;
+}
+
+.dislike:hover,
+.like:hover{
+  color:  blueviolet;
+}
+.dislikes,
 .likes{
   display: flex;
   color: white;
