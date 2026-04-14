@@ -1,3 +1,10 @@
+## 14/04/2026
+* TO_KEEP folder shall be applied, Leo will help us to manage this.
+* Checklist 6 shall be done ASAP, everyone write done the requiment part in the issue. The format is "author @person1 reviewed by @person2 update daily_scrum #63"
+* Everyone shall make unitesting before the lab section.
+* CI shall be implemented, at least try to before the next meeting.
+
+
 ## 13/04/2026
 * Nasra: unitest for backend profile
 * Yuze: unitest for frontend postFeed
