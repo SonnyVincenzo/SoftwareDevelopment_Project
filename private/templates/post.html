@@ -16,9 +16,12 @@
 
 <body>
   <header class="header">
-    <p class="username">New Post - Username</p> <!-- Change element into a h1, and make the username be p as seperate element-->
+    <section class="section">
+      <h1 class="newPost">New Post </h1>
+      <p class="username">Username</p>
+    </section>
     <form action="/home">
-      <button id="exit" onclick=""> <!--ADD LINK-->
+      <button id="exit" > 
         &#10006;
       </button>
     </form>
@@ -27,8 +30,8 @@
     <input id="title" type="text" spellcheck="true" maxlength="100"
     placeholder="Post - Title" name="postHeader">
     <textarea
-      id="mainBody" type="text" spellcheck="true" style="resize:none" name="postText" 
-      placeholder="Post - Text" maxlength="300"></textarea> <!-- questioning use of "style" as that is a css attribute-->
+      id="mainBody" type="text" spellcheck="true" name="postText" 
+      placeholder="Post - Text" maxlength="500"></textarea> 
     <button type="submit" id="standardButton">Share</button>
   </form>
 </body>

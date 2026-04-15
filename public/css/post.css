@@ -45,6 +45,7 @@ html{
   font-weight: bold ;
   width: 300px;
   height: 100px;
+  resize:none;
   
   margin-left: 20px;
   margin-top: 20px;
@@ -92,12 +93,20 @@ html{
   padding-bottom: 5px;
   padding-top: 5px;
   align-items: center;
-  justify-content: space-between;
 }
 
+.section{
+  display: flex;
+  width: 94%;
+  justify-content: start;
+  flex-direction: row;
+  align-items: center;
+}
+
+.newPost,
 .username{
-  display: inline-block;
-  font-weight: bold;
+  display: flex;
+  font-weight: 600;
   font-family: Tektur;
   font-size: 35px;
   color: rgb(0, 0, 0);
@@ -110,12 +119,11 @@ html{
   font-weight: bold;
   font-size: 35px;
   color: rgb(0, 0, 0);
-  padding-bottom: 0px;
-  padding-top: 0px;
-  margin-right: 5px;
+  padding-right: 25px;
   background-color: transparent;
   border-width: 0px;
   cursor: pointer;
+  justify-content: end;
 }
 
 #exit:hover{
