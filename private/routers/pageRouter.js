@@ -6,6 +6,7 @@ import { handleIndexGet } from '../routeHandlers/indexHandler.js';
 import { handleAboutGet } from '../routeHandlers/aboutHandler.js';
 import { handleHomeGet } from '../routeHandlers/homeHandler.js';
 import { handlePostGet, handlePostPost } from '../routeHandlers/postHandler.js';
+import { handlePostFeedGet } from '../routeHandlers/postFeedHandler.js';
 
 const pageRouter = express.Router();
 
@@ -14,6 +15,7 @@ pageRouter.get(['/', '/index'], handleIndexGet);
 pageRouter.get('/about', handleAboutGet);
 pageRouter.get('/home', handleHomeGet);
 pageRouter.get('/post', handlePostGet);
+pageRouter.get('/postFeed', handlePostFeedGet)
 
 pageRouter.post('/post', handlePostPost)
 
