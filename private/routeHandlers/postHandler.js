@@ -1,5 +1,6 @@
 import { sendWebResponse } from "../methods/responseMethods.js";
 import { loadHtml } from "../methods/utilsMethods.js";
+import db from '../db/connection.js'
 
 /**
  * Handles post page request (GET /post).
@@ -35,7 +36,7 @@ export async function handlePostGet(req, res) {
  * @param {import('express').Request} req - Input from browser; ex: url, query.
  * @param {import('express').Response} res - Output from browser; ex: text/html.
  */
-export async function handlePostPost(req, res, db) { // Post-ception.
+export async function handlePostPost(req, res) { // Post-ception.
     try {
         const { postHeader, postText } = req.body; // Form data.
         db.query (
