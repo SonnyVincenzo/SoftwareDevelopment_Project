@@ -182,13 +182,26 @@ function UpdateMomentum() {
 }
 UpdateMomentum();
 
+let mouseStopTimeout;
+let isMouseStopMoving = true;
+
 document.addEventListener('mousemove', (event) => {
+    // if mouse stops moving while still holding the left button
+    // then we reset the velocity value so the rotation will not be triggerd
+    // 10 ms
+    clearTimeout(mouseStopTimeout);
+     mouseStopTimeout = setTimeout(() => {
+        if (mouse.leftClick === true) {
+            mouse.velocityX = 0;
+            mouse.velocityY = 0;
+        }
+    }, 5); 
     // only track when holding the left button
     if (mouse.leftClick === true) {
         mouse.dx = (event.clientX - mouse.x);
         mouse.dy = (event.clientY - mouse.y);
         mouse.leftHandled = false;
-
+        // keep rotating follow by the momemtum
         if (Math.abs(mouse.dx) > Math.abs(mouse.velocityX)) {
             mouse.velocityX = mouse.dx;
         }
@@ -196,6 +209,7 @@ document.addEventListener('mousemove', (event) => {
             mouse.velocityY = mouse.dy;
         }
     }
+    // update the mouse position as previous postion for the next loop
     mouse.x = event.clientX;
     mouse.y = event.clientY;
 });
