@@ -3,6 +3,13 @@ This is a project in the software development course at Jönköping University.
 We are developing a social media website in Node.js for the backend and React for the frontend. 
 We will have MySQL for the website's database. 
 
+## How to unit test
+* run the following code
+  * `node .\unit_testing\loginHandler.test.js`
+  * `node .\unit_testing\postFeed.lib.test.js`
+  * `node .\unit_testing\postHandler.test.js`
+  * `node .\unit_testing\userHandler.test.js`
+
 ## The contents of the project
 - The website will include the option to create an account with a username and password. 
 - The users will be able to post text statuses on the website. 
