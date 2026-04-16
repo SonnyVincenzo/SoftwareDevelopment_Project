@@ -2,7 +2,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import { createUserGetHandler } from '../private/routeHandlers/user/userHandler.js';
-import db from '../private/db/connection.js';
 
 describe('createUserGetHandler', () => {
     it('should return a user profile page as HTML', async () => {
@@ -20,7 +19,7 @@ describe('createUserGetHandler', () => {
             end: () => {}
         };
     
-    try{
+
         //run the handler
         const handler = createUserGetHandler(db);
         await handler(req, res);
@@ -31,10 +30,6 @@ describe('createUserGetHandler', () => {
         assert.ok(body.includes('<title>Profile Page</title>'));
         assert.ok(body.includes('<h2>Posts</h2>'));
         
-    } finally {
-        //Close MySQL connection 
-        db.end();
-        }
     });
 });
 
