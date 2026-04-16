@@ -15,15 +15,16 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "node --test",
+    "test": "jest",
     "setup": "npm install && shx cp .env-sample .env"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mysql2": "^3.22.0",
-    "setup": "^0.0.3"
+    "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "mysql2": "^3.22.0"
   },
   "keywords": [],
   "devDependencies": {
