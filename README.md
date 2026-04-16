@@ -5,10 +5,7 @@ We will have MySQL for the website's database.
 
 ## How to unit test
 * run the following code
-  * `node .\unit_testing\loginHandler.test.js`
-  * `node .\unit_testing\postFeed.lib.test.js`
-  * `node .\unit_testing\postHandler.test.js`
-  * `node .\unit_testing\userHandler.test.js`
+  * `node --test`
 
 ## The contents of the project
 - The website will include the option to create an account with a username and password. 
