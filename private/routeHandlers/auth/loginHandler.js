@@ -1,6 +1,7 @@
 import { sendWebResponse } from '../../methods/responseMethods.js';
 import { loadHtml } from '../../methods/utilsMethods.js';
 import db from '../../db/connection.js';
+import bcrypt from 'bcrypt';
 
 /**
  * Handles login page request (GET /auth/login).
@@ -37,27 +38,46 @@ export function createLoginPostHandler(db) {
      */
     return async function handleLoginPost(req, res) {
         try {
-            const { username, password } = req.body; // form data
+    
+            const plainUsername = req.body.username;
+            const plainPassword = req.body.password;
 
-            // db.query(
-            //     'SELECT username, password FROM User WHERE username = ?',
-            //     [username],
-            //     (err, result) => {
-            //         if (err) {
-            //             console.error('Login query error:', err);
-            //             return sendWebResponse(res, 403, 'text/plain', 'Invalid login query.');
-            //         }
+            const username = typeof plainUsername == "string" ? plainUsername.trim(): "";
+            const password = typeof plainPassword == "string" ? plainPassword : "";
+            
+            if(!username || !password){
+                return sendWebResponse(res, 400,"text/plain", "username and password are required");
+            }
 
-            //         if (result.length === 0) {
-            //             return sendWebResponse(res, 401, 'text/plain', 'Invalid username or password');
-            //         }
+            db.query(
+                'SELECT username, password FROM User WHERE username = ?',
+                [username],
+                async (err, result) =>{
+                    if (err) {
+                        console.error('Login query error:', err);
+                        return sendWebResponse(res, 403, 'text/plain', 'Invalid login query.');
+                    }
 
-            //         password check goes here when ready
-            //         const user = result[0];
-            //     }
-            // );
-            // sendWebResponse(res, 200, 'text/plain', `Welcome, ${user.username}!`);
-            res.redirect(`/user/${username}`); // Should it be username or uuid?
+                    if (result.length === 0) {
+                        return sendWebResponse(res, 401, 'text/plain', 'Invalid username or password');
+                    }
+
+                    try{
+                        const user = result[0];
+                        const isMatch = await bcrypt.compare(password, user.password);
+
+                    if(!isMatch){
+                        return sendWebResponse(res,401, "text/plain", "Invalid username or password");
+                    }
+
+                    res.redirect(`/user/${user.username}`);
+                    }catch(err){
+                        console.error("Login error", err);
+                        sendWebResponse(res, 500, "text/plain", "500 internal server error");
+                    }  
+                }        
+            );
+
         } catch (error) {
             console.error('Login POST error:', error);
             sendWebResponse(res, 500, 'text/plain', '500 Internal Server Error');
